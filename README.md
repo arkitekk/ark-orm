@@ -15,13 +15,13 @@ A minimal and expressive ORM layer for PostgreSQL built on top of `pg`. Ideal fo
 -   Written in TypeScript
 
 ---
+````
 
 ## 📦 Installation
 
 ```bash
 npm install ark-orm
 ```
-````
 
 or
 
