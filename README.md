@@ -69,16 +69,16 @@ const UserModel = () => new Model("users");
 ## 🧩 Usage
 
 ```ts
-const users = new UserModel();
+const UserModel = () => new Model("users");
 
 // Basic select
-const data = await users.select("id,name,email").find();
+const data = await UserModel().select("id,name,email").find();
 
 // Where condition
-const filtered = await users.select("id,name").where({ status: "active" }).findAll();
+const filtered = await UserModel().select("id,name").where({ status: "active" }).findAll();
 
 // Pagination + Sorting
-const paged = await users
+const paged = await UserModel()
     .select("id, name")
     .where(whereClause)
     .filter(filterObj)
