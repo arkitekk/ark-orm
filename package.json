@@ -1,0 +1,29 @@
+{
+  "name": "ark-orm",
+  "version": "1.0.0",
+  "description": "A simple orm for postgresql",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "postgres",
+    "orm",
+    "typescript",
+    "npm"
+  ],
+  "author": "Amit Singh",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.15.2",
+    "typescript": "^5.8.3"
+  }
+}
