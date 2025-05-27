@@ -33,7 +33,7 @@ class Model extends Base {
         } catch (error) {
             throw error;
         } finally {
-            if (ownClient) client.release();
+            client.release();
         }
     }
 
@@ -66,7 +66,7 @@ class Model extends Base {
         } catch (error) {
             throw error;
         } finally {
-            if (ownClient) client.release();
+            client.release();
         }
     }
 
@@ -105,7 +105,7 @@ class Model extends Base {
         } catch (error) {
             throw error;
         } finally {
-            if (ownClient) client.release();
+            client.release();
         }
     }
 
@@ -150,7 +150,7 @@ class Model extends Base {
         } catch (error) {
             throw error;
         } finally {
-            if (ownClient) client.release();
+            client.release();
         }
     }
 
@@ -200,7 +200,7 @@ class Model extends Base {
         } catch (error) {
             throw error;
         } finally {
-            if (ownClient) client.release();
+            client.release();
         }
     }
 
@@ -236,7 +236,7 @@ class Model extends Base {
         } catch (error) {
             throw error;
         } finally {
-            if (ownClient) client.release();
+            client.release();
         }
     }
 
@@ -269,7 +269,7 @@ class Model extends Base {
         } catch (error) {
             throw error;
         } finally {
-            if (ownClient) client.release();
+            client.release();
         }
     }
 

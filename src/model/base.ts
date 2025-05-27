@@ -224,12 +224,12 @@ class Base {
         const client = await this.pool.connect();
         try {
             const query = `
-      SELECT conname, pg_get_constraintdef(oid)
-      FROM pg_constraint
-      WHERE conrelid = '${this.tableName}'::regclass
-      AND confrelid = '${relatedTableName}'::regclass
-      AND contype = 'f'
-    `;
+                SELECT conname, pg_get_constraintdef(oid)
+                FROM pg_constraint
+                WHERE conrelid = '${this.tableName}'::regclass
+                AND confrelid = '${relatedTableName}'::regclass
+                AND contype = 'f'
+                `;
 
             const { rows } = await client.query(query);
 
