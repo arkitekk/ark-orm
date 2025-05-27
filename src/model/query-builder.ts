@@ -157,52 +157,58 @@ class Model extends Base {
     /**
      * Query function to update many records
      */
-    async updateMany(dataArray: IUpdateMany[], client?: PoolClient): Promise<DataObject> {
-        let ownClient = false;
-        if (!client) {
-            client = await this.getClient();
-            ownClient = true;
-        }
-
-        try {
-            const updatedRows = [];
-            for (const data of dataArray) {
-                const where = data.where; // where clause is mandatory
-                if (!where) {
-                    throw new Error('Each data object must have an "where" property');
-                }
-
-                // Extract column names and values from the data object, excluding 'id'
-                const columns = Object.keys(data).filter((key) => key !== "where");
-                const values = columns.map((key) => data[key]);
-
-                this.where(where);
-
-                // Generate SET clause dynamically
-                const setClause = columns
-                    .map((col, index) => `"${col}" = $${index + this.conditionValues.length + 1}`)
-                    .join(", ");
-
-                // Construct the query
-                const query = `UPDATE "${this.tableName}" SET ${setClause} WHERE ${this.whereClause} RETURNING id`;
-
-                const queryValues = [...this.conditionValues, ...values];
-
-                // Execute the query
-                const { rows } = await client.query(query, queryValues);
-                if (rows.length > 0) {
-                    updatedRows.push(rows[0]);
-                }
-            }
-
-            // Commit the transaction
-            return updatedRows;
-        } catch (error) {
-            throw error;
-        } finally {
-            if (ownClient) client.release();
-        }
+    async updateMany(dataArray: IUpdateMany[], client?: PoolClient): Promise<any[]> {
+    let ownClient = false;
+    if (!client) {
+      client = await this.getClient();
+      ownClient = true;
     }
+
+    if (!Array.isArray(dataArray) || dataArray.length === 0) {
+      throw new Error('bulkUpdate: dataArray must be a non-empty array');
+    }
+
+    const flattenedData = dataArray.map(({ where, ...rest }) => ({
+      ...rest,
+      ...where,
+    }));
+
+    const allKeys = Object.keys(flattenedData[0]);
+    const matchKeys = Object.keys(dataArray[0].where);
+    const updateKeys = allKeys.filter((key) => !matchKeys.includes(key));
+
+    if (updateKeys.length === 0) {
+      throw new Error('bulkUpdate: No fields left to update after excluding match keys');
+    }
+
+    const setClause = updateKeys.map((key) => `"${key}" = updates."${key}"`).join(',\n');
+    const whereClause = matchKeys.map((key) => `target."${key}" = updates."${key}"`).join(' AND ');
+
+    const query = `
+      WITH updates AS (
+        SELECT * FROM jsonb_populate_recordset(NULL::${this.tableName}, $1::jsonb)
+      )
+      UPDATE "${this.tableName}" AS target
+      SET
+        ${setClause}
+      FROM updates
+      WHERE
+        ${whereClause}
+      RETURNING target.id;
+    `;
+
+    try {
+      // Execute the query
+      const { rows } = await client.query(query, [JSON.stringify(flattenedData)]);
+
+      // Return the updated row or null if no rows were updated
+      return rows;
+    } catch (error) {
+      throw error;
+    } finally {
+      if (ownClient) client.release();
+    }
+  }
 
     /**
      * Query function to soft delete one record
