@@ -1,6 +1,6 @@
 {
   "name": "ark-orm",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple orm for postgresql",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,6 +10,10 @@
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arkitekk/ark-orm.git"
   },
   "keywords": [
     "postgres",
