@@ -1,4 +1,4 @@
-````md
+```md
 # ⚡ Lightweight PostgreSQL ORM
 
 A minimal and expressive ORM layer for PostgreSQL built on top of `pg`. Ideal for TypeScript and Node.js apps where you want flexibility, type safety, and custom query building — without the bloat of heavy ORMs.
@@ -7,15 +7,15 @@ A minimal and expressive ORM layer for PostgreSQL built on top of `pg`. Ideal fo
 
 ## 🚀 Features
 
--   Lightweight and fast – no query overhead
--   Fluent query builder (chainable API)
--   Built-in PostgreSQL connection pooling
--   Clean structure with extendable `Model` base class
--   Supports filtering, pagination, sorting, population
--   Written in TypeScript
+- Lightweight and fast – no query overhead
+- Fluent query builder (chainable API)
+- Built-in PostgreSQL connection pooling
+- Clean structure with extendable `Model` base class
+- Supports filtering, pagination, sorting, population
+- Written in TypeScript
 
 ---
-````
+```
 
 ## 📦 Installation
 
@@ -36,18 +36,18 @@ yarn add ark-orm
 ### 1. Initialize the PostgreSQL connection
 
 ```ts
-import { initDB } from "ark-orm";
+import { initDB } from 'ark-orm';
 
 initDB({
-    host: "localhost",
-    user: "your_user",
-    password: "your_password",
-    database: "your_db",
-    port: 5432,
-    max: 20,
-    idleTimeoutMillis: 5000,
-    connectionTimeoutMillis: 5000,
-    ssl: false,
+  host: 'localhost',
+  user: 'your_user',
+  password: 'your_password',
+  database: 'your_db',
+  port: 5432,
+  max: 20,
+  idleTimeoutMillis: 5000,
+  connectionTimeoutMillis: 5000,
+  ssl: false,
 });
 ```
 
@@ -59,7 +59,7 @@ initDB({
  * This factory function ensures that each invocation returns a fresh instance,
  * providing isolation across different queries and operations.
  */
-const UserModel = () => new Model("users");
+const UserModel = () => new Model('users');
 ```
 
 > **Note:** Always define your models as factory functions rather than variables. This ensures that a new instance is created on each call, preventing shared state or unintended side effects across different operations.
@@ -69,22 +69,22 @@ const UserModel = () => new Model("users");
 ## 🧩 Usage
 
 ```ts
-const UserModel = () => new Model("users");
+const UserModel = () => new Model('users');
 
 // Basic select
-const data = await UserModel().select("id,name,email").find();
+const data = await UserModel().select('id,name,email').find();
 
 // Where condition
-const filtered = await UserModel().select("id,name").where({ status: "active" }).findAll();
+const filtered = await UserModel().select('id,name').where({ status: 'active' }).findAll();
 
 // Pagination + Sorting
 const paged = await UserModel()
-    .select("id, name")
-    .where(whereClause)
-    .filter(filterObj)
-    .pagination(pageIndex, pageSize)
-    .sort(sortBy, sortOrder)
-    .find();
+  .select('id, name')
+  .where(whereClause)
+  .filter(filterObj)
+  .pagination(pageIndex, pageSize)
+  .sort(sortBy, sortOrder)
+  .find();
 ```
 
 ---
@@ -101,13 +101,13 @@ const paged = await UserModel()
 
 ### Query Builder (`Model` methods)
 
-| Method                     | Description                            |
-| -------------------------- | -------------------------------------- |
-| `select(fields)`           | Define columns to select               |
-| `where({condition:values})` | Add WHERE clause                       |
-| `pagination(page, limit)`    | Limit + offset handling                |
-| `sort(field, order)`       | ORDER BY clause                        |
-| `find(), createOne(payload), updateMany(payload)`                   | Execute built query and return results |
+| Method                                            | Description                            |
+| ------------------------------------------------- | -------------------------------------- |
+| `select(fields)`                                  | Define columns to select               |
+| `where({condition:values})`                       | Add WHERE clause                       |
+| `pagination(page, limit)`                         | Limit + offset handling                |
+| `sort(field, order)`                              | ORDER BY clause                        |
+| `find(), createOne(payload), updateMany(payload)` | Execute built query and return results |
 
 > More methods like `findIn()`, `countDocuments()`, `or()`, and `populate()` are also supported.
 
@@ -126,7 +126,6 @@ src/
 ```
 
 ---
-
 
 ## 📝 License
 
@@ -150,3 +149,5 @@ Let me know if you'd like me to:
 
 Or if you want to turn this into a `typedoc` site too.
 ```
+
+..
